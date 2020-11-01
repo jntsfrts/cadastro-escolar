@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/cadastrar/aluno")
+@RequestMapping("/api/v1")
 @RestController
 public class AlunoController {
 
@@ -21,24 +21,28 @@ public class AlunoController {
         this.alunoService = alunoService;
     }
 
-    @GetMapping
-    public List<Aluno> getAllAlunos() {
+    @GetMapping("/alunos")
+    public ResponseEntity<?> getAllAlunos() {
         return alunoService.getAllAlunos();
     }
 
-    @PostMapping
+    @GetMapping(path = "/alunos/{matricula}")
+    public ResponseEntity<?> findAlunoByMatricula(@PathVariable(value = "matricula") Long matricula) {
+        return new ResponseEntity<>(alunoService.findByMatricula(matricula), HttpStatus.OK);
+    }
+
+    @PostMapping("/alunos")
     public void addAluno(@RequestBody Aluno aluno) {
         alunoService.addNewAluno(aluno);
     }
 
-    @PutMapping
-    public void updateAluno(@PathVariable("matricula") UUID matricula,
-                            @RequestBody Aluno aluno) {
-        alunoService.updateAluno();
+    @PutMapping("/alunos/{matricula}")
+    public void updateAluno(@RequestBody Aluno aluno) {
+        alunoService.updateAluno(aluno);
     }
 
-    @DeleteMapping
-    public void deleteAluno(@PathVariable("matricula") UUID matricula) {
+    @DeleteMapping("/alunos/{matricula}")
+    public void deleteAluno(@PathVariable("matricula") Long matricula) {
         alunoService.deleteAluno(matricula);
     }
 }
