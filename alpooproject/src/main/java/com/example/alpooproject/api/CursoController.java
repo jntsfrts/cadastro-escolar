@@ -29,8 +29,8 @@ public class CursoController {
     }
 
     @DeleteMapping("/cursos/{codCurso}")
-    public ResponseEntity<?> deleteCurso(@PathVariable Long matricula) {
-        cursoService.deleteCurso(matricula);
+    public ResponseEntity<?> deleteCurso(@PathVariable Long codCurso) {
+        cursoService.deleteCurso(codCurso);
         return new ResponseEntity<>( HttpStatus.OK);
     }
 
